@@ -4,12 +4,21 @@ const db = require('./db')
 
 
 
+const PORT = process.env.PORT || 3000
+
+
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
 
-app.get('/', function (req, res) {
-  res.send("Welcome")
+// middleware function
+const logRequest = (req, res, next)=>{
+  console.log(`{${new Date().toLocaleString()}] Request Made to : ${req.originalUrl}`)
+}
+
+
+app.get('/', logRequest, function (req, res) {
+  res.send("Welcome to my hotel")
 })
 
 
@@ -23,6 +32,6 @@ app.use('/menu', menuItemRoutes)
 
 
 
-app.listen(3000, ()=>{
+app.listen(PORT, ()=>{
   console.log('listening on port 3000')
 })
